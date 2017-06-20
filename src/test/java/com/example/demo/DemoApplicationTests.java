@@ -11,12 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class DemoApplicationTests {
 
-  // @Autowired
-  // Bean1 bean1;
-
   @Autowired()
-  // RestService<HelloService> service1;
-  // @Qualifier("RestService")
   HelloService service1;
 
   @Test
