@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +19,10 @@ public class DemoApplicationTests {
   // @Qualifier("RestService")
   HelloService service1;
 
-  @Autowired
-  BeanInterface ba;
-
   @Test
   public void contextLoads() {
 
-    // System.out.println(this.bean1.hello());
-
-    System.out.println(this.service1);
-
-    // System.out.println(this.ba);
+    Assert.assertEquals("hello from syntetic service", this.service1.hello());
   }
 
 }

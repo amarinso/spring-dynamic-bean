@@ -1,8 +1,5 @@
 package com.example.demo;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -10,7 +7,6 @@ import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.type.AnnotationMetadata;
@@ -18,10 +14,6 @@ import org.springframework.core.type.filter.AnnotationTypeFilter;
 
 //@org.springframework.context.annotation.Configuration
 public class MyInterfaceScanRegistrar implements ImportBeanDefinitionRegistrar, BeanFactoryAware {
-
-  private ApplicationContext applicationContext;
-
-  Map<String, RestService> clients = new HashMap<>();
 
   private BeanFactory beanFactory;
 
@@ -39,7 +31,7 @@ public class MyInterfaceScanRegistrar implements ImportBeanDefinitionRegistrar, 
         return true;
       }
     };
-    provider.addIncludeFilter(new AnnotationTypeFilter(MyCustomBean.class));
+    provider.addIncludeFilter(new AnnotationTypeFilter(RestService.class));
 
     for (BeanDefinition beanDefinition : provider.findCandidateComponents(BASE_PACKAGE)) {
       String clazz = beanDefinition.getBeanClassName();
@@ -57,18 +49,17 @@ public class MyInterfaceScanRegistrar implements ImportBeanDefinitionRegistrar, 
 
   private Object createBean(String clazz) {
 
+    // create here the clients with CXF
     // JAXRSClientFactory.create("http://localhost", Class.forName(beanDefinition.getBeanClassName()));
 
-    if ("com.example.demo.HelloService".equals(clazz)) {
-      return new HelloService() {
+    // fake it
+    return new HelloService() {
 
-        @Override
-        public String hello() {
+      @Override
+      public String hello() {
 
-          return "hello from registar";
-        }
-      };
-    }
-    return null;
+        return "hello from syntetic service";
+      }
+    };
   }
 }
